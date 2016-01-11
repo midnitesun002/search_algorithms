@@ -8,15 +8,22 @@ class Node:
   # pair is a node and distance to node tuple
   self.attachedNodes.append(pair)
   
- def getNodes(self):
+ def getNeighbors(self):
   return self.attachedNodes
   
  def getID(self):
   return self.id
 
 # Create nodes
-N = 5
-nodes = [Node(str(i)) for i in range(N * N)]
+N = 6
+nodes = [Node('{0:3d}'.format(i + 1)) for i in range(N * N)]
+
+# Print the nodes
+for i in range(N):
+ text = ''
+ for j in range(N):
+  text += nodes[i * N + j].getID()
+ print(text)
 
 # Arrange nodes in a grid, equidistant
 for i in range(N * N - 1):
@@ -28,13 +35,15 @@ for i in range(N * N - 1):
 # Display nodes`
 for i in range(N * N):
  attached = ''
- for node in nodes[i].getNodes():
+ for node in nodes[i].getNeighbors():
   attached += node[0].getID() + ' '
- print('Node %d is attached to %s' % (i, attached))
+ print('Node %s is attached to %s' % (nodes[i].getID(), attached))
 
 initialNode = nodes[0]
 distance = dict({node:-1 for node in nodes})
-distance[initialNode] = -1
-visitedNodes = set({initialNode})
+distance[initialNode] = 0
+unvisitedNodes = set({node for node in nodes if node is not initialNode})
 
-distance[nodes[0]] = 0
+currentNode = initialNode
+for neighbor in currentNode.getNeighbors():
+ 
