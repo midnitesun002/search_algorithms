@@ -32,4 +32,9 @@ for i in range(N * N):
   attached += node[0].getID() + ' '
  print('Node %d is attached to %s' % (i, attached))
 
-startNode = nodes[0]
+initialNode = nodes[0]
+distance = dict({node:-1 for node in nodes})
+distance[initialNode] = -1
+visitedNodes = set({initialNode})
+
+distance[nodes[0]] = 0
