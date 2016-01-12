@@ -9,7 +9,7 @@ class Node:
   self.attachedNodes.append(pair)
   
  def getNeighbors(self):
-  return self.attachedNodes
+  return self.attachedNodes[:]
   
  def getID(self):
   return self.id
@@ -40,10 +40,33 @@ for i in range(N * N):
  print('Node %s is attached to %s' % (nodes[i].getID(), attached))
 
 initialNode = nodes[0]
-distance = dict({node:-1 for node in nodes})
+destination = nodes[-1]
+
+distance = dict({node:float('inf') for node in nodes})
 distance[initialNode] = 0
-unvisitedNodes = set({node for node in nodes if node is not initialNode})
 
 currentNode = initialNode
-for neighbor in currentNode.getNeighbors():
+unvisitedNodes = set(nodes)
+
+while destination in unvisitedNodes:
+ for neighbor in currentNode.getNeighbors():
+  if neighbor[0] not in unvisitedNodes:
+   continue
+  if distance[currentNode] + neighbor[1] < distance[neighbor[0]]:
+   distance[neighbor[0]] = distance[currentNode] + neighbor[1]
+ unvisitedNodes.remove(currentNode)
  
+ minDistance = float('inf')
+ for node in unvisitedNodes:
+  if distance[node] < minDistance:
+   minDistance = distance[node]
+   currentNode = node
+ 
+ # check that the minimum distance between unvisited and initial node is not infinity
+ # float('inf') is float('inf') returns False
+ if not minDistance is minDistance:
+  break
+ 
+
+
+print(distance[destination])
