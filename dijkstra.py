@@ -45,7 +45,7 @@ def dijkstra(graph, source, destination):
   # check that the minimum distance between unvisited and initial node is not infinity
   # float('inf') is float('inf') returns False
   if not minDistance is minDistance:
-   return float('inf') # do something for nonexistant path
+   return distance, previousNode
   unvisitedNodes.remove(currentNode)
   
   for neighbor in currentNode.getNeighbors():
@@ -62,7 +62,7 @@ def dijkstra(graph, source, destination):
 import random
 
 # Create nodes
-N = 6
+N = 1000
 nodes = [Node('{0:3d}'.format(i + 1)) for i in range(N * N)]
 
 # Print the nodes
@@ -70,7 +70,7 @@ for i in range(N):
  text = ''
  for j in range(N):
   text += nodes[i * N + j].getID()
- print(text)
+ #print(text)
 
 # Arrange nodes in a grid, equidistant
 for i in range(N * N - 1):
@@ -94,7 +94,7 @@ distance, previousNode = dijkstra(nodes, initialNode, destination)
 currentNode = destination
 path = currentNode.getID()
 while previousNode[currentNode] != None:
- path = previousNode[currentNode].getID() + ' -' + path
+ path = previousNode[currentNode].getID().strip() + ' -> ' + path
  currentNode = previousNode[currentNode]
 print(path)
 print(distance[destination])
